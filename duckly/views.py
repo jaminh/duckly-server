@@ -8,13 +8,42 @@ from .models import (
     MyModel,
     )
 
+from velruse import login_url
+import json
+
 @view_config(route_name='home', renderer='home_unauth.jade')
 def my_view(request):
     try:
         one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
-    return {'one':one, 'project':'duckly'}
+    return {'login_url': login_url(request, 'google')}
+
+@view_config(
+    context='velruse.AuthenticationComplete',
+    renderer='home.jade',
+)
+def login_complete_view(request):
+    context = request.context
+    result = {
+        'provider_type': context.provider_type,
+        'provider_name': context.provider_name,
+        'profile': context.profile,
+        'credentials': context.credentials,
+    }
+    return {
+        'result': result,
+    }
+
+@view_config(
+    context='velruse.AuthenticationDenied',
+    renderer='home_unauth.jade',
+)
+def login_denied_view(request):
+    return {
+        'result': 'denied',
+        'login_url': login_url(request, 'google')
+    }
 
 conn_err_msg = """\
 Pyramid is having a problem using your SQL database.  The problem

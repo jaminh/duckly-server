@@ -1,0 +1,31 @@
+!!! 5
+html(lang="en")
+  head
+    block head
+      title
+        block title
+          | Duckly
+      link(href="/css/zocial.css", type="text/css", rel="stylesheet")
+      link(href="/css/styles.css", type="text/css", rel="stylesheet")
+  body
+    .wrap
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          block navbar
+      .container-fluid
+        block nofocal
+          .row-fluid
+            .span12
+              .focal
+                block focal
+        #body
+          block fullcontent
+            #sidebar.span3
+              block sidebar
+            #content.span9
+              block content
+      .push
+    #footer
+      block foot
+        p.credit.
+          &copy; Copyright 2012

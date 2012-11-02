@@ -31,3 +31,9 @@ pip-log.txt
 
 #Config
 production.ini
+\.*\.ini
+
+# Temp files
+.sass-cache
+*.swp
+/data

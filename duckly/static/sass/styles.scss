@@ -1,0 +1,107 @@
+@import "bootstrap";
+@import "compass";
+
+html, body {
+    height: 100%;
+    background-color: #404040;
+    color: #ccc;
+}
+
+.navbar {
+    @include box-shadow(0 3px 3px -3px #333);
+    border-bottom: 1px solid #333;
+}
+
+.navbar-inner {
+    @include background-image(linear-gradient(#B768A2, darken(#B768A2, 20%)));
+}
+
+.focal {
+    @extend .hero-unit;
+
+    background-color: #FADA5E;
+    color: #333;
+    @include background-image(linear-gradient(#F8DE7E, #FADA5E));
+    @include box-shadow(0 3px 3px -3px #333);
+
+    @include border-radius(0px 0px 0px 0px);
+    border-top: 3px dashed #333;
+    border-bottom: 3px dashed #333;
+
+    margin: 41px -20px 0 -20px;
+
+    .duck {
+        float: right;
+        margin-top: -20px;
+    }
+}
+
+$footer_height: 40px;
+
+.wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto (-$footer_height);
+}
+
+.push {
+    height: $footer_height;
+}
+
+#footer {
+    background-color: #666;
+    height: $footer_height;
+
+    p.credit {
+        color: #ccc;
+        padding-top: 10px;
+        text-align: center;
+    }
+}
+
+#body {
+    @extend .row-fluid;
+
+    clear: both;  
+
+    #sidebar {
+        //@extend .span3;
+
+        .sidebar-box {
+            @extend .well;
+
+            color: #333;
+            padding: 10px;
+            border: 4px solid #666;
+            @include box-shadow(3px 3px 3px 0 #000);
+            @include border-radius(10px);
+
+            h2 {
+                font-size: 16px;
+                color: #666;
+                margin: 0 0 1em 0;
+                padding: 0;
+                border-bottom: 1px solid #ccc;
+                text-align: center;
+            }
+
+            .zocial {
+                display: block;
+                margin: 0 auto;
+                &:hover {
+                    color: white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    #content {
+        h2 {
+            font-size: 36px;
+        }
+        //@extend .span9;
+        font-size: 18px;
+    }
+}

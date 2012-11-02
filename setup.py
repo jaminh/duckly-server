@@ -14,6 +14,11 @@ requires = [
     'pyramid_debugtoolbar',
     'zope.sqlalchemy',
     'waitress',
+    'pyjade',
+    'markdown',
+    'velruse',
+    'coffeescript',
+    'pyramid_beaker'
     ]
 
 setup(name='duckly',
