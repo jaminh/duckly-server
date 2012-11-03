@@ -8,29 +8,29 @@ html, body {
 }
 
 .navbar {
-    @include box-shadow(0 3px 3px -3px #333);
-    border-bottom: 1px solid #333;
+    border-bottom: 0;
 }
 
 .navbar-inner {
-    @include background-image(linear-gradient(darken(#B768A2, 20%), #B768A2));
-    background-color: #B768A2;
+    @include background-image(none);
+    @include box-shadow(none);
+    background-color: #999;
     border: 0;
 }
 
 .focal {
     @extend .hero-unit;
 
-    background-color: #FADA5E;
-    color: #333;
-    @include background-image(linear-gradient(#F8DE7E, #FADA5E));
-    @include box-shadow(0 3px 3px -3px #333);
+    color: #fff;
+    background-color: #0093AF;
+    @include background-image(linear-gradient(darken(#0093AF, 7.5%), #0093AF, darken(#0093AF, 7.5%)));
 
-    @include border-radius(0px 0px 0px 0px);
+    @include border-radius(0);
     border-top: 3px dashed #333;
     border-bottom: 3px dashed #333;
 
-    margin: -19px -20px 20px -20px;
+    margin: -20px -20px 40px -20px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
 
     .duck {
         float: right;
@@ -78,35 +78,6 @@ $footer_height: 40px;
     #sidebar:not(:empty) {
         @extend [class*="span"];
         @extend .span3;
-
-        .sidebar-box {
-            @extend .well;
-
-            color: #333;
-            padding: 10px;
-            border: 4px solid #666;
-            @include box-shadow(3px 3px 3px 0 #000);
-            @include border-radius(10px);
-
-            h2 {
-                font-size: 16px;
-                color: #666;
-                margin: 0 0 1em 0;
-                padding: 0;
-                border-bottom: 1px solid #ccc;
-                text-align: center;
-            }
-
-            .zocial {
-                display: block;
-                margin: 0 auto;
-
-                &:hover {
-                    color: white;
-                    text-decoration: none;
-                }
-            }
-        }
     }
 
     #sidebar:not(:empty) + #content {
@@ -124,6 +95,35 @@ $footer_height: 40px;
 
         h2 {
             font-size: 36px;
+        }
+    }
+
+    .sidebar-box {
+        @extend .well;
+
+        color: #333;
+        padding: 10px;
+        border: 4px solid #666;
+        @include box-shadow(3px 3px 3px 0 #000);
+        @include border-radius(10px);
+
+        h2 {
+            font-size: 16px;
+            color: #666;
+            margin: 0 0 1em 0;
+            padding: 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .zocial {
+            display: block;
+            margin: 0 auto;
+
+            &:hover {
+                color: white;
+                text-decoration: none;
+            }
         }
     }
 }
