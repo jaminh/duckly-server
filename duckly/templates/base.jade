@@ -12,18 +12,17 @@ html(lang="en")
       .navbar.navbar-fixed-top
         .navbar-inner
           block navbar
-      .container-fluid
+      #page.container-fluid
         block nofocal
           .row-fluid
             .span12
               .focal
                 block focal
         #body
-          block fullcontent
-            #sidebar.span3
-              block sidebar
-            #content.span9
-              block content
+          #sidebar
+            block sidebar
+          #content
+            block content
       .push
     #footer
       block foot

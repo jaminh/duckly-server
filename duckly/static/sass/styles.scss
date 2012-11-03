@@ -13,7 +13,9 @@ html, body {
 }
 
 .navbar-inner {
-    @include background-image(linear-gradient(#B768A2, darken(#B768A2, 20%)));
+    @include background-image(linear-gradient(darken(#B768A2, 20%), #B768A2));
+    background-color: #B768A2;
+    border: 0;
 }
 
 .focal {
@@ -28,7 +30,7 @@ html, body {
     border-top: 3px dashed #333;
     border-bottom: 3px dashed #333;
 
-    margin: 41px -20px 0 -20px;
+    margin: -19px -20px 20px -20px;
 
     .duck {
         float: right;
@@ -60,13 +62,22 @@ $footer_height: 40px;
     }
 }
 
+#page {
+    padding-top: 60px;
+}
+
 #body {
     @extend .row-fluid;
 
-    clear: both;  
+    clear: both;
 
-    #sidebar {
-        //@extend .span3;
+    #sidebar:empty {
+        display: none;
+    }
+
+    #sidebar:not(:empty) {
+        @extend [class*="span"];
+        @extend .span3;
 
         .sidebar-box {
             @extend .well;
@@ -89,6 +100,7 @@ $footer_height: 40px;
             .zocial {
                 display: block;
                 margin: 0 auto;
+
                 &:hover {
                     color: white;
                     text-decoration: none;
@@ -97,11 +109,21 @@ $footer_height: 40px;
         }
     }
 
+    #sidebar:not(:empty) + #content {
+        @extend .span9;
+    }
+
+    #sidebar:empty + #content {
+        @extend .span11;
+    }
+
     #content {
+        @extend [class*="span"];
+
+        font-size: 18px;
+
         h2 {
             font-size: 36px;
         }
-        //@extend .span9;
-        font-size: 18px;
     }
 }
