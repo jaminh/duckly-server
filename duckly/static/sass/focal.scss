@@ -1,0 +1,84 @@
+@import "bootstrap";
+@import "compass";
+@import "media";
+
+// Core Styles
+.focal {
+    // Inheritance
+    @extend .hero-unit;
+
+    // Colors
+    $bgcolor: #0093AF;
+    $bgcolordark: darken($bgcolor, 12.5%);
+    $fgcolor: #fff;
+
+    // Positioning
+    position: relative;
+    margin: -20px -20px 60px -20px;
+
+    // Text
+    color: $fgcolor;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+
+    // Background
+    background-color: $bgcolor;
+    @include background-image(linear-gradient($bgcolordark,
+                                              $bgcolor,
+                                              $bgcolordark));
+
+    // Borders
+    @include border-radius(0);
+    border-top: 3px dashed #333;
+    border-bottom: 3px dashed #333;
+
+    // Header
+    clear: both;
+
+    // Focal Image
+    .duck {
+        // Position
+        float: right;
+        position: absolute;
+        right: 100px;
+        bottom: -50px;
+
+        // Sizing
+        width: 250px;
+        max-width: 250px;
+        max-height: 250px;
+    }
+}
+
+// Phone Styles
+@include device(phone) {
+    .focal {
+        margin-bottom: 10px;
+        padding: 60px 20px 10px 20px;
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 40px
+        }
+
+        .flavor {
+            margin-top: 5px;
+            text-align: center;
+            p {
+                line-height: 1em;
+                display: inline;
+                margin-right: 1em;
+                font-size: 14px;
+            }
+        }
+
+        .duck {
+            width: 125px;
+            max-width: 125px;
+            max-height: 125px;
+            top: -35px;
+            left: 50%;
+            margin-left: -62.5px;
+        }
+    }
+}

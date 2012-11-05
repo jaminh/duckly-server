@@ -1,16 +1,14 @@
-extends base
+extends authenticated
 
 block focal
   img.duck(src="/img/duck.png")
-  h1 Duckly
-  p.
-    Suck it.
-
-block sidebar
-  .sidebar-box
-    h2 Tables
+  h1 #{user.display_name}
+  .flavor
+    p Suck it.
 
 block content
   h2 Woo
-  p.
-     You logged in. Good for you.
+  p
+    | You logged in. Good for you. Now,
+    a(href="#{request.route_url('logout')}") Logout
+    | .

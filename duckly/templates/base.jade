@@ -4,14 +4,14 @@ html(lang="en")
     block head
       title
         block title
-          | Duckly
+          | Duckly :: Table Vision
+      meta(name="viewport", content="width = device-width, initial-scale = 1, user-scalable = no")
       link(href="/css/zocial.css", type="text/css", rel="stylesheet")
       link(href="/css/styles.css", type="text/css", rel="stylesheet")
   body
     .wrap
-      .navbar.navbar-fixed-top
-        .navbar-inner
-          block navbar
+      #header
+        block navbar
       #page.container-fluid
         block nofocal
           .row-fluid
@@ -19,10 +19,11 @@ html(lang="en")
               .focal
                 block focal
         #body
-          #sidebar
-            block sidebar
-          #content
-            block content
+          block fullbody
+            #sidebar
+              block sidebar
+            #content
+              block content
       .push
     #footer
       block foot

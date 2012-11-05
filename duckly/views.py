@@ -1,63 +1,65 @@
+"""
+
+
+"""
+
+from pyramid.httpexceptions import HTTPFound
 from pyramid.response import Response
+from pyramid.security import remember
+from pyramid.security import forget
+from pyramid.security import authenticated_userid
 from pyramid.view import view_config
+from pyramid.view import notfound_view_config
+from pyramid.view import forbidden_view_config
+from pyramid.url import route_url
 
 from sqlalchemy.exc import DBAPIError
 
 from .models import (
     DBSession,
-    MyModel,
-    )
+    User,
+)
 
 from velruse import login_url
 import json
 
-@view_config(route_name='home', renderer='home_unauth.jade')
-def my_view(request):
-    try:
-        one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
-    except DBAPIError:
-        return Response(conn_err_msg, content_type='text/plain', status_int=500)
+@view_config(route_name = 'home.unauth', renderer = 'home_unauth.jade')
+def home_unauth(request):
     return {'login_url': login_url(request, 'google')}
 
-@view_config(
-    context='velruse.AuthenticationComplete',
-    renderer='home.jade',
-)
+@view_config(route_name = 'home', renderer = 'home.jade')
+def home(request):
+    userid = authenticated_userid(request)
+    user = User.get_by_id(userid)
+    return {'user': user}
+
+@view_config(context = 'velruse.AuthenticationComplete')
 def login_complete_view(request):
-    context = request.context
-    result = {
-        'provider_type': context.provider_type,
-        'provider_name': context.provider_name,
-        'profile': context.profile,
-        'credentials': context.credentials,
-    }
-    return {
-        'result': result,
-    }
+    user = User.social(request.context.profile, request.context.credentials)
+    DBSession.add(user)
+    DBSession.flush()
+    headers = remember(request, user.id)
+    next = request.params.get('next') or request.route_url('home')
+    return HTTPFound(location = next, headers = headers)
 
-@view_config(
-    context='velruse.AuthenticationDenied',
-    renderer='home_unauth.jade',
-)
+@view_config(context = 'velruse.AuthenticationDenied',
+             renderer = 'home_unauth.jade')
 def login_denied_view(request):
-    return {
-        'result': 'denied',
-        'login_url': login_url(request, 'google')
-    }
+    return logout(request)
 
-conn_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
+@view_config(route_name = 'logout')
+def logout(request):
+    return HTTPFound(location = route_url('home', request),
+                     headers = forget(request))
 
-1.  You may need to run the "initialize_duckly_db" script
-    to initialize your database tables.  Check your virtual 
-    environment's "bin" directory for this script and try to run it.
+@notfound_view_config(renderer = 'notfound.jade')
+def notfound_view(request):
+    return {}
 
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
+@forbidden_view_config(renderer = 'forbidden.jade')
+def forbidden_view(request):
+    if authenticated_userid(request):
+        return HTTPForbidden()
 
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""
-
+    next = login_url(request, 'google')
+    return HTTPFound(location = next)

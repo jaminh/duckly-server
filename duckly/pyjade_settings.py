@@ -1,4 +1,6 @@
 """
+
+
 """
 
 from pyjade import utils as jadeutils
@@ -11,11 +13,15 @@ bool_attributes = ['pretty', 'compileDebug']
 
 def includeme(config):
     """
+
+
     """
 
     def process(src, filename = None, parser = jadeutils.Parser,
                 compiler = jadeutils.Compiler):
         """
+
+
         """
 
         _parser = parser(src, filename = filename)
@@ -43,6 +49,8 @@ def includeme(config):
 
 def parse_list(settings, attribute):
     """
+
+
     """
 
     if attribute in settings:
@@ -51,6 +59,8 @@ def parse_list(settings, attribute):
 
 def parse_bool(settings, attribute):
     """
+
+
     """
 
     if attribute in settings:
@@ -60,24 +70,32 @@ def parse_bool(settings, attribute):
 
 def filter_plain(x, y):
     """
+
+
     """
 
     return x
 
 def filter_css(x, y):
     """
+
+
     """
 
     return '<style type="text/css">{0}</style>'.format(x)
 
 def filter_javascript(x, y):
     """
+
+
     """
 
     return '<script type="text/javascript">{0}</script>'.format(x)
 
 def filter_escaped(x, y):
     """
+
+    
     """
 
     return escape(x)

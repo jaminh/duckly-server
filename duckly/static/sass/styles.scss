@@ -1,10 +1,35 @@
 @import "bootstrap";
 @import "compass";
+@import "focal";
 
 html, body {
     height: 100%;
     background-color: #404040;
     color: #ccc;
+}
+
+a {
+    color: lighten(#0093AF, 5%);
+
+    &:hover {
+        color: #0093AF;
+        text-decoration: none;
+    }
+}
+
+#header {
+    background-color: #999;
+    height: 40px;
+
+    a {
+        display: block;
+        font-size: 20px;
+        color: #333;
+        margin-top:10px;
+        float: right;
+        margin-right: 60px;
+        height: 100%;
+    }
 }
 
 .navbar {
@@ -16,26 +41,6 @@ html, body {
     @include box-shadow(none);
     background-color: #999;
     border: 0;
-}
-
-.focal {
-    @extend .hero-unit;
-
-    color: #fff;
-    background-color: #0093AF;
-    @include background-image(linear-gradient(darken(#0093AF, 7.5%), #0093AF, darken(#0093AF, 7.5%)));
-
-    @include border-radius(0);
-    border-top: 3px dashed #333;
-    border-bottom: 3px dashed #333;
-
-    margin: -20px -20px 40px -20px;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
-
-    .duck {
-        float: right;
-        margin-top: -20px;
-    }
 }
 
 $footer_height: 40px;
@@ -63,7 +68,7 @@ $footer_height: 40px;
 }
 
 #page {
-    padding-top: 60px;
+    padding-top: 20px;
 }
 
 #body {
@@ -97,33 +102,41 @@ $footer_height: 40px;
             font-size: 36px;
         }
     }
+}
 
-    .sidebar-box {
-        @extend .well;
+.box {
+    @extend .well;
+    @extend .clearfix;
 
-        color: #333;
-        padding: 10px;
-        border: 4px solid #666;
-        @include box-shadow(3px 3px 3px 0 #000);
-        @include border-radius(10px);
+    color: #333;
+    padding: 10px;
+    border: 4px solid #666;
+    @include box-shadow(3px 3px 3px 0 #000);
+    @include border-radius(10px);
 
-        h2 {
-            font-size: 16px;
-            color: #666;
-            margin: 0 0 1em 0;
-            padding: 0;
-            border-bottom: 1px solid #ccc;
-            text-align: center;
-        }
+    h2 {
+        font-size: 16px;
+        color: #666;
+        margin: 0 0 1em 0;
+        padding: 0;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+    }
 
-        .zocial {
-            display: block;
-            margin: 0 auto;
+    .zocial {
+        display: block;
+        margin: 0 auto;
 
-            &:hover {
-                color: white;
-                text-decoration: none;
-            }
+        &:hover {
+            color: white;
+            text-decoration: none;
         }
     }
+}
+
+.small-box {
+    @extend .box;
+
+    width: 50%;
+    margin: 0 auto;
 }
