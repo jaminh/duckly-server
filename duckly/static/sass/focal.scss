@@ -2,74 +2,91 @@
 @import "compass";
 @import "media";
 
-// Core Styles
+//- Core Styles
 .focal {
-    // Inheritance
+    //- Inheritance
     @extend .hero-unit;
 
-    // Colors
+    //- Colors
     $bgcolor: #0093AF;
     $bgcolordark: darken($bgcolor, 12.5%);
     $fgcolor: #fff;
 
-    // Positioning
+    //- Links
+    a:hover {
+        color: #fff;
+    }
+
+    //- Positioning
     position: relative;
     margin: -20px -20px 60px -20px;
 
-    // Text
+    //- Text
     color: $fgcolor;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
 
-    // Background
+    //- Background
     background-color: $bgcolor;
     @include background-image(linear-gradient($bgcolordark,
                                               $bgcolor,
                                               $bgcolordark));
 
-    // Borders
+    //- Borders
     @include border-radius(0);
     border-top: 3px dashed #333;
     border-bottom: 3px dashed #333;
 
-    // Header
+    //- Header
     clear: both;
 
-    // Focal Image
+    //- Authentication Link
+    .zocial {
+        font-size: 14px;
+    }
+
+    //- Focal Image
     .duck {
-        // Position
+        //- Position
         float: right;
         position: absolute;
         right: 100px;
         bottom: -50px;
 
-        // Sizing
+        //- Sizing
         width: 250px;
         max-width: 250px;
         max-height: 250px;
     }
 }
 
-// Phone Styles
+//- Phone Styles
 @include device(phone) {
     .focal {
         margin-bottom: 10px;
         padding: 60px 20px 10px 20px;
+        text-align: center;
+
+        p {
+            line-height: 1em;
+            font-size: 14px;
+            margin-top: 10px;
+        }
 
         h1 {
-            text-align: center;
             margin-top: 30px;
-            font-size: 40px
+            margin-bottom: 5px;
+            font-size: 30px
         }
 
         .flavor {
-            margin-top: 5px;
-            text-align: center;
             p {
-                line-height: 1em;
                 display: inline;
                 margin-right: 1em;
-                font-size: 14px;
             }
+        }
+
+        .zocial {
+            font-size: 12px;
         }
 
         .duck {

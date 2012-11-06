@@ -34,13 +34,14 @@ def main(global_config, **settings):
         authorization_policy = authz_policy,
         root_factory = User.Root)
 
-    config.add_static_view('img', 'duckly:static/img')
+    config.add_static_view('images', 'duckly:static/images')
     config.add_static_view('js', 'duckly:static/js')
     config.add_static_view('css', 'duckly:static/css')
     config.add_google_oauth2_login_from_settings()
     config.add_route('logout', '/logout')
     config.add_route('home.unauth', '/', custom_predicates = (unauthorized,))
     config.add_route('home', '/', custom_predicates = (authorized,))
+    config.add_route('signup', '/signup', custom_predicates = (authorized,))
 
     config.scan()
 

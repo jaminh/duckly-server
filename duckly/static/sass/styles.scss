@@ -1,5 +1,6 @@
 @import "bootstrap";
 @import "compass";
+@import "navbar";
 @import "focal";
 
 html, body {
@@ -15,32 +16,6 @@ a {
         color: #0093AF;
         text-decoration: none;
     }
-}
-
-#header {
-    background-color: #999;
-    height: 40px;
-
-    a {
-        display: block;
-        font-size: 20px;
-        color: #333;
-        margin-top:10px;
-        float: right;
-        margin-right: 60px;
-        height: 100%;
-    }
-}
-
-.navbar {
-    border-bottom: 0;
-}
-
-.navbar-inner {
-    @include background-image(none);
-    @include box-shadow(none);
-    background-color: #999;
-    border: 0;
 }
 
 $footer_height: 40px;
@@ -81,7 +56,6 @@ $footer_height: 40px;
     }
 
     #sidebar:not(:empty) {
-        @extend [class*="span"];
         @extend .span3;
     }
 
@@ -93,13 +67,16 @@ $footer_height: 40px;
         @extend .span11;
     }
 
-    #content {
+    #sidebar, #content {
         @extend [class*="span"];
+    }
 
+    #content {
         font-size: 18px;
 
         h2 {
             font-size: 36px;
+            text-shadow: 2px 2px 2px rgba(255, 255, 255, .25);
         }
     }
 }
@@ -108,18 +85,20 @@ $footer_height: 40px;
     @extend .well;
     @extend .clearfix;
 
-    color: #333;
+    color: #999;
     padding: 10px;
-    border: 4px solid #666;
+    border: 2px dashed #666;
     @include box-shadow(3px 3px 3px 0 #000);
     @include border-radius(10px);
 
+    background-color: rgba(0, 0, 0, .4);
+
     h2 {
         font-size: 16px;
-        color: #666;
+        color: #999;
         margin: 0 0 1em 0;
         padding: 0;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid #666;
         text-align: center;
     }
 
@@ -139,4 +118,16 @@ $footer_height: 40px;
 
     width: 50%;
     margin: 0 auto;
+}
+
+// Phone Styles
+@include device(phone) {
+    #body {
+        #content {
+            h2 {
+                font-size: 24px;
+                text-shadow: 1px 1px 1px rgba(255, 255, 255, .25);
+            }
+        }
+    }
 }

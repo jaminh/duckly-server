@@ -27,7 +27,8 @@ import json
 def home_unauth(request):
     return {'login_url': login_url(request, 'google')}
 
-@view_config(route_name = 'home', renderer = 'home.jade')
+@view_config(route_name = 'home', renderer = 'home.jade',
+    permission = 'verified')
 def home(request):
     userid = authenticated_userid(request)
     user = User.get_by_id(userid)
@@ -52,13 +53,25 @@ def logout(request):
     return HTTPFound(location = route_url('home', request),
                      headers = forget(request))
 
+@view_config(route_name = 'signup', renderer = 'signup.jade')
+def signup(request):
+    return {}
+
 @notfound_view_config(renderer = 'notfound.jade')
 def notfound_view(request):
     return {}
 
 @forbidden_view_config(renderer = 'forbidden.jade')
 def forbidden_view(request):
-    if authenticated_userid(request):
+    userid = authenticated_userid(request)
+
+    if userid:
+        user = User.get_by_id(userid)
+
+        if not user.verified:
+            next = route_url('signup', request)
+            return HTTPFound(location = next)
+
         return HTTPForbidden()
 
     next = login_url(request, 'google')

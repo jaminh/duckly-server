@@ -1,0 +1,29 @@
+@import "bootstrap";
+@import "compass";
+@import "media";
+
+#header {
+    background-color: #999;
+    height: 40px;
+
+    a {
+        display: block;
+        font-size: 20px;
+        color: #333;
+        margin-top: 10px;
+        float: left;
+        margin-left: 20px;
+        height: 100%;
+    }
+}
+
+.navbar {
+    border-bottom: 0;
+}
+
+.navbar-inner {
+    @include background-image(none);
+    @include box-shadow(none);
+    background-color: #999;
+    border: 0;
+}

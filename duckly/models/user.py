@@ -57,11 +57,15 @@ class User(Base):
         """
 
         self.id = profile['accounts'][0]['userid']
-        self.username = profile['preferredUsername'] # Bad idea... defaults to email... (this may be slug)
-        self.display_name = profile['displayName'] # Bad idea... Could be real name...
-        self.name = profile['displayName']
-        self.email = profile['verifiedEmail']
+        self.username = None
+        self.display_name = None
+        self.name = profile.get('displayName')
+        self.email = profile.get('verifiedEmail')
         self.groups = []
+
+    @property
+    def verified(self):
+        return bool(self.username)
 
     @classmethod
     def get_by_id(cls, userid):
@@ -98,6 +102,6 @@ class User(Base):
         user = User.get_by_id(userid)
 
         if user:
-            return []
+            return ['g:verified'] if user.verified else []
             #return ['g:{0}'.format(group) for group in user.groups]
 
