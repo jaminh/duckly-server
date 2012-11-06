@@ -8,4 +8,10 @@ block focal
 
 block content
   h2 Complete Registration
-  p Schtuff
+  form(action="", method="post")
+      label(for="username") Username
+      input(type="text", id="username")
+      label(for="display_name") Display Name
+      input(type="text", id="display_name")
+    .form-actions
+      input(type="submit", class="btn btn-primary", value="Quack!")
