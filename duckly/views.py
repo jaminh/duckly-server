@@ -29,7 +29,7 @@ def requires_user(func):
 
     """
 
-    def inner(request):
+    def inner(request, *args, **kwargs):
         """
 
 
@@ -39,7 +39,7 @@ def requires_user(func):
             userid = authenticated_userid(request)
             request.user = User.get_by_id(userid)
 
-        return func(request)
+        return func(request, *args, **kwargs)
 
     return inner
 
@@ -84,6 +84,7 @@ def signup_form(request):
 
 @view_config(route_name = 'signup', renderer = 'signup.jade',
              permission = 'authenticated', request_method = 'POST')
+@requires_user
 def signup_submit(request):
     return signup_form(request)
 

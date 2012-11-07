@@ -125,8 +125,9 @@ class User(Base):
 
         """
 
-        user = User.get_by_id(userid)
+        if not hasattr(request, 'user'):
+            request.user = User.get_by_id(userid)
 
-        if user:
-            return ['g:verified'] if user.verified else []
+        if request.user:
+            return ['g:verified'] if request.user.verified else []
 
