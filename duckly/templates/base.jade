@@ -12,6 +12,9 @@ html(lang="en")
     .wrap
       #header
         block navbar
+          if user
+            a(href="#{request.route_url('logout')}", class="btn btn-info")
+              i(class="icon-off")
       #page.container-fluid
         block nofocal
           .row-fluid

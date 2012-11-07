@@ -17,8 +17,38 @@ from .predicates import (
     authorized,
     unauthorized
 )
+from pyramid.security import (
+    Allow,
+    Authenticated,
+    NO_PERMISSION_REQUIRED
+)
+
+class Root(object):
+    """
+
+
+    """
+
+    __acl__ = [
+        (Allow, Authenticated, 'authenticated'),
+        (Allow, NO_PERMISSION_REQUIRED, 'none')
+    ]
+
+    def __init__(self, request):
+        """
+
+
+        """
+
+        self.request = request
+
 
 def main(global_config, **settings):
+    """
+
+
+    """
+
     engine = engine_from_config(settings, 'sqlalchemy.')
     DBSession.configure(bind = engine)
     Base.metadata.bind = engine
@@ -32,16 +62,16 @@ def main(global_config, **settings):
         session_factory = session_factory,
         authentication_policy = authn_policy,
         authorization_policy = authz_policy,
-        root_factory = User.Root)
+        root_factory = Root)
 
     config.add_static_view('images', 'duckly:static/images')
     config.add_static_view('js', 'duckly:static/js')
     config.add_static_view('css', 'duckly:static/css')
-    config.add_google_oauth2_login_from_settings()
+    config.add_google_oauth2_login_from_settings(prefix = 'google.')
     config.add_route('logout', '/logout')
     config.add_route('home.unauth', '/', custom_predicates = (unauthorized,))
     config.add_route('home', '/', custom_predicates = (authorized,))
-    config.add_route('signup', '/signup', custom_predicates = (authorized,))
+    config.add_route('signup', '/signup')
 
     config.scan()
 

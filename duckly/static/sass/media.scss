@@ -1,17 +1,19 @@
 @mixin device($size) {
     @if $size == phone {
-        @media (min-width: 320px) and (max-width: 480px) {
+        @media (max-width: 767px) {
             @content;
         }
     } @else if $size == landscape-tablet {
-        @media (width: 768px) and (orientation: landscape) {
+        @media (width: 1024px) and (orientation: landscape) {
             @content;
         }
     }  @else if $size == tablet {
-        @media (min-width: 481px) and (max-width: 1024px) {
+        @media (min-width: 768px) and (max-width: 1023px) {
             @content;
         }
     } @else {
-        @content;
+        @media (min-width: 1024px) {
+            @content;
+        }
     }
 }

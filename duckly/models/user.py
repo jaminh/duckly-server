@@ -5,7 +5,8 @@
 
 from pyramid.security import (
     Allow,
-    Authenticated
+    Authenticated,
+    Everyone
 )
 
 from datetime import datetime
@@ -21,25 +22,38 @@ from sqlalchemy import (
 )
 import uuid
 
+class UserFactory(object):
+    """
+
+
+    """
+
+    __acl__ = [
+        (Allow, Everyone, 'view')
+    ]
+
+    def __init__(self, request):
+        """
+
+
+        """
+
+        self.request = request
+
+    def __getitem__(self, key):
+        """
+
+
+        """
+
+        return User.get_by_id(key)
+
+
 class User(Base):
     """
 
 
     """
-
-    class Root(object):
-        """
-
-
-        """
-        __acl__ = [
-            (Allow, Authenticated, 'authenticated'),
-        ]
-
-        def __init__(self, request):
-            self.request = request
-
-
     __tablename__ = 'users'
 
     id = Column(Text, primary_key = True)
@@ -61,7 +75,19 @@ class User(Base):
         self.display_name = None
         self.name = profile.get('displayName')
         self.email = profile.get('verifiedEmail')
-        self.groups = []
+
+    @property
+    def __acl__(self):
+        """
+
+
+        """
+
+        return [
+            (Allow, Authenticated, 'authenticated'),
+            (Allow, self.id, 'edit')
+        ]
+
 
     @property
     def verified(self):
@@ -103,5 +129,4 @@ class User(Base):
 
         if user:
             return ['g:verified'] if user.verified else []
-            #return ['g:{0}'.format(group) for group in user.groups]
 

@@ -1,5 +1,12 @@
+$blue: #0093AF;
+$green: #00CC2B;
+$orange: #FF7C00;
+
+$btnPrimaryBackground: $blue;
+
 @import "bootstrap";
 @import "compass";
+@import "media";
 @import "navbar";
 @import "focal";
 

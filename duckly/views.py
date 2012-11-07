@@ -13,7 +13,7 @@ from pyramid.view import notfound_view_config
 from pyramid.view import forbidden_view_config
 from pyramid.url import route_url
 
-from sqlalchemy.exc import DBAPIError
+from functools import wraps
 
 from .models import (
     DBSession,
@@ -23,16 +23,35 @@ from .models import (
 from velruse import login_url
 import json
 
+def requires_user(func):
+    """
+
+
+    """
+
+    def inner(request):
+        """
+
+
+        """
+
+        if not hasattr(request, 'user'):
+            userid = authenticated_userid(request)
+            request.user = User.get_by_id(userid)
+
+        return func(request)
+
+    return inner
+
 @view_config(route_name = 'home.unauth', renderer = 'home_unauth.jade')
 def home_unauth(request):
     return {'login_url': login_url(request, 'google')}
 
 @view_config(route_name = 'home', renderer = 'home.jade',
     permission = 'verified')
+@requires_user
 def home(request):
-    userid = authenticated_userid(request)
-    user = User.get_by_id(userid)
-    return {'user': user}
+    return {}
 
 @view_config(context = 'velruse.AuthenticationComplete')
 def login_complete_view(request):
@@ -53,15 +72,26 @@ def logout(request):
     return HTTPFound(location = route_url('home', request),
                      headers = forget(request))
 
-@view_config(route_name = 'signup', renderer = 'signup.jade')
-def signup(request):
-    return {}
+@view_config(route_name = 'signup', renderer = 'signup.jade',
+    permission = 'authenticated', request_method = 'GET')
+@requires_user
+def signup_form(request):
+    if request.user and request.user.verified:
+        next = route_url('home', request)
+        HTTPFound(location = next)
 
-@notfound_view_config(renderer = 'notfound.jade')
+    return {'user': request.user}
+
+@view_config(route_name = 'signup', renderer = 'signup.jade',
+             permission = 'authenticated', request_method = 'POST')
+def signup_submit(request):
+    return signup_form(request)
+
+@notfound_view_config(renderer = '404.jade')
 def notfound_view(request):
     return {}
 
-@forbidden_view_config(renderer = 'forbidden.jade')
+@forbidden_view_config(renderer = '403.jade')
 def forbidden_view(request):
     userid = authenticated_userid(request)
 

@@ -1,8 +1,8 @@
-extends authenticated
+extends base
 
 block focal
   img.duck(src="/img/duck.png")
-  h1 #{user.display_name}
+  h1 #{request.user.display_name}
   .flavor
     p Suck it.
 

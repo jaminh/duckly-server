@@ -1,10 +1,9 @@
-@import "bootstrap";
 @import "compass";
-@import "media";
 
 #header {
     background-color: #999;
     height: 40px;
+    overflow: hidden;
 
     a {
         display: block;
