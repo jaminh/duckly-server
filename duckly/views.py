@@ -23,33 +23,12 @@ from .models import (
 from velruse import login_url
 import json
 
-def requires_user(func):
-    """
-
-
-    """
-
-    def inner(request, *args, **kwargs):
-        """
-
-
-        """
-
-        if not hasattr(request, 'user'):
-            userid = authenticated_userid(request)
-            request.user = User.get_by_id(userid)
-
-        return func(request, *args, **kwargs)
-
-    return inner
-
 @view_config(route_name = 'home.unauth', renderer = 'home_unauth.jade')
 def home_unauth(request):
     return {'login_url': login_url(request, 'google')}
 
 @view_config(route_name = 'home', renderer = 'home.jade',
     permission = 'verified')
-@requires_user
 def home(request):
     return {}
 
@@ -74,7 +53,6 @@ def logout(request):
 
 @view_config(route_name = 'signup', renderer = 'signup.jade',
     permission = 'authenticated', request_method = 'GET')
-@requires_user
 def signup_form(request):
     if request.user and request.user.verified:
         next = route_url('home', request)
@@ -84,7 +62,6 @@ def signup_form(request):
 
 @view_config(route_name = 'signup', renderer = 'signup.jade',
              permission = 'authenticated', request_method = 'POST')
-@requires_user
 def signup_submit(request):
     return signup_form(request)
 
