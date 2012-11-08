@@ -1,7 +1,7 @@
 extends base
 
 block focal
-  img.duck(src="/images/duck.png")
+  img.duck.placeholder(src="/images/questionmark.png")
   h1 #{request.user.display_name}
   .flavor
     p #{request.user.username}
