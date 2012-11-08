@@ -37,3 +37,8 @@ production.ini
 .sass-cache
 *.swp
 /data
+
+# Project
+.project
+.pydev-project
+*.sublime-project*

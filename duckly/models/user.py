@@ -1,14 +1,8 @@
-"""
-
-
-"""
-
 from pyramid.security import (
     Allow,
     Authenticated,
     Everyone
 )
-
 from datetime import datetime
 from .meta import (
     Base,
@@ -16,60 +10,34 @@ from .meta import (
 )
 from sqlalchemy import (
     Column,
-    Integer,
     Text,
     DateTime
 )
-import uuid
+
 
 class UserFactory(object):
-    """
-
-
-    """
-
     __acl__ = [
         (Allow, Everyone, 'view')
     ]
 
     def __init__(self, request):
-        """
-
-
-        """
-
         self.request = request
 
     def __getitem__(self, key):
-        """
-
-
-        """
-
         return User.get_by_id(key)
 
 
 class User(Base):
-    """
-
-
-    """
     __tablename__ = 'users'
 
-    id = Column(Text, primary_key = True)
-    username = Column(Text, unique = True, index = True)
-    email = Column(Text, unique = True)
-    display_name = Column(Text, unique = True)
+    id = Column(Text, primary_key=True)
+    username = Column(Text, unique=True, index=True)
+    email = Column(Text, unique=True)
+    display_name = Column(Text, unique=True)
     name = Column(Text)
-    creation_date = Column(DateTime, nullable = False,
-                           default = datetime.utcnow())
+    creation_date = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, profile):
-        """
-
-
-        """
-
         self.id = profile['accounts'][0]['userid']
         self.username = None
         self.display_name = None
@@ -78,16 +46,10 @@ class User(Base):
 
     @property
     def __acl__(self):
-        """
-
-
-        """
-
         return [
             (Allow, Authenticated, 'authenticated'),
             (Allow, self.id, 'edit')
         ]
-
 
     @property
     def verified(self):
@@ -95,21 +57,11 @@ class User(Base):
 
     @classmethod
     def get_by_id(cls, userid):
-        """
-
-
-        """
-
-        users = DBSession.query(User).filter_by(id = userid).all()
+        users = DBSession.query(User).filter_by(id=userid).all()
         return users[0] if users else None
 
     @classmethod
     def social(cls, profile, credentials):
-        """
-
-
-        """
-
         userid = profile['accounts'][0]['userid']
         user = User.get_by_id(userid)
 
@@ -120,11 +72,6 @@ class User(Base):
 
     @classmethod
     def groupfinder(cls, userid, request):
-        """
-
-
-        """
-
         if not hasattr(request, 'user'):
             request.user = User.get_by_id(userid)
 
