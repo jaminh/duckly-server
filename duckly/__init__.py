@@ -31,6 +31,7 @@ class Root(object):
 
     __acl__ = [
         (Allow, Authenticated, 'authenticated'),
+        (Allow, 'g:verified', 'verified'),
         (Allow, NO_PERMISSION_REQUIRED, 'none')
     ]
 

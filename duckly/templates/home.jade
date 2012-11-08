@@ -1,14 +1,11 @@
 extends base
 
 block focal
-  img.duck(src="/img/duck.png")
+  img.duck(src="/images/duck.png")
   h1 #{request.user.display_name}
   .flavor
-    p Suck it.
+    p #{request.user.username}
 
 block content
   h2 Woo
-  p
-    | You logged in. Good for you. Now,
-    a(href="#{request.route_url('logout')}") Logout
-    | .
+  p You logged in. Good for you.

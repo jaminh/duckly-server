@@ -8,10 +8,10 @@ block focal
 
 block content
   h2 Complete Registration
-  form(action="", method="post", style="width:280px")
-      label(for="username") Username
-      input(type="text", id="username", style="width: 100%")
-      label(for="display_name") Display Name
-      input(type="text", id="display_name", style="width: 100%")
+  form(action="#{request.route_url('signup')}", method="post", style="width:280px;")
+    label(for="username") Username
+    input(type="text", name="username", id="username", style="width: 100%")
+    label(for="display_name") Display Name
+    input(type="text", id="display_name", name="display_name", style="width: 100%")
     .form-actions(style="width: 250px;")
       input(type="submit", class="btn btn-primary", value="Quack!", style="width: 100%")

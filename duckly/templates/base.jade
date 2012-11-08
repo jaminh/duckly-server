@@ -12,7 +12,7 @@ html(lang="en")
     .wrap
       #header
         block navbar
-          if user
+          if getattr(request, 'user', None)
             a(href="#{request.route_url('logout')}", class="btn btn-info")
               i(class="icon-off")
       #page.container-fluid

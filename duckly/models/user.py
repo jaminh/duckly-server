@@ -59,7 +59,7 @@ class User(Base):
     id = Column(Text, primary_key = True)
     username = Column(Text, unique = True, index = True)
     email = Column(Text, unique = True)
-    display_name = Column(Text)
+    display_name = Column(Text, unique = True)
     name = Column(Text)
     creation_date = Column(DateTime, nullable = False,
                            default = datetime.utcnow())

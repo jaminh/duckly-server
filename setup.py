@@ -18,7 +18,8 @@ requires = [
     'markdown',
     'velruse',
     'coffeescript',
-    'pyramid_beaker'
+    'pyramid_beaker',
+    'WTForms'
     ]
 
 setup(name='duckly',

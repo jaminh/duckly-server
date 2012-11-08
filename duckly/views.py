@@ -4,6 +4,7 @@
 """
 
 from pyramid.httpexceptions import HTTPFound
+from pyramid.httpexceptions import HTTPForbidden
 from pyramid.response import Response
 from pyramid.security import remember
 from pyramid.security import forget
@@ -20,6 +21,10 @@ from .models import (
     User,
 )
 
+from .forms import (
+    RegistrationForm
+)
+
 from velruse import login_url
 import json
 
@@ -28,7 +33,7 @@ def home_unauth(request):
     return {'login_url': login_url(request, 'google')}
 
 @view_config(route_name = 'home', renderer = 'home.jade',
-    permission = 'verified')
+             permission = 'verified')
 def home(request):
     return {}
 
@@ -58,12 +63,20 @@ def signup_form(request):
         next = route_url('home', request)
         HTTPFound(location = next)
 
-    return {'user': request.user}
+    form = RegistrationForm()
+
+    return {'form': form}
 
 @view_config(route_name = 'signup', renderer = 'signup.jade',
              permission = 'authenticated', request_method = 'POST')
 def signup_submit(request):
-    return signup_form(request)
+    form = RegistrationForm(request.POST)
+    request.user.username = form.username.data
+    request.user.display_name = form.display_name.data
+    DBSession.merge(request.user)
+    DBSession.flush()
+    next = route_url('home', request)
+    return HTTPFound(location = next)
 
 @notfound_view_config(renderer = '404.jade')
 def notfound_view(request):
@@ -74,13 +87,14 @@ def forbidden_view(request):
     userid = authenticated_userid(request)
 
     if userid:
-        user = User.get_by_id(userid)
+        if not hasattr(request, 'user'):
+            request.user = User.get_by_id(userid)
 
-        if not user.verified:
+        if not request.user.verified:
             next = route_url('signup', request)
             return HTTPFound(location = next)
 
-        return HTTPForbidden()
+        return Response('forbidden')
 
     next = login_url(request, 'google')
     return HTTPFound(location = next)
